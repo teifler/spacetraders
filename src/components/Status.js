@@ -1,31 +1,36 @@
 import styled from 'styled-components'
-import React from 'react'
 import PropTypes from 'prop-types'
 
 Status.propTypes = {
   isGreen: PropTypes.bool,
 }
 
-function Status({ isGreen = false }) {
+export default function Status({ isGreen = false, something }) {
+  if (isGreen) {
+    something.callANonExistingFunction()
+  }
+
   return (
     <Wrapper>
-      <div>{isGreen ? 'green' : 'red'}</div>
+      Status:
+      <StatusDot isGreen={isGreen}>
+        <span className="sr-only">{isGreen ? 'green' : 'red'}</span>
+      </StatusDot>
     </Wrapper>
   )
 }
 
-export default Status
 const Wrapper = styled.section`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 12px;
   background-color: #ddd;
 `
 
 const StatusDot = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 24px;
   height: 24px;
-  background: ${({ isGreen }) => (isGreen ? 'green' : 'red')};
+  background-color: ${props => (props.isGreen ? 'green' : 'crimson')};
   border-radius: 50%;
 `
